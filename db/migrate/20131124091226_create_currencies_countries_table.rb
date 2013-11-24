@@ -3,7 +3,7 @@ class CreateCurrenciesCountriesTable < ActiveRecord::Migration
     create_table :countries_currencies do |t|
       t.integer :country_id
       t.integer :currency_id
-      t.boolean :visited
+      t.boolean :visited, :default => false
     end
   end
 end

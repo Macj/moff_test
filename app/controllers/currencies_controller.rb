@@ -4,13 +4,19 @@ class CurrenciesController < ApplicationController
   # GET /currencies
   # GET /currencies.json
   def index
+    @visited = {}
+    @not_visited = {}
     @currencies = Currency.all
+    @currencies.each do |c|
+      @visited[c.id] = CountriesCurrencies.visited_for(c.id)
+      @not_visited[c.id] = CountriesCurrencies.not_visited_for(c.id)
+    end
   end
 
   # GET /currencies/1
   # GET /currencies/1.json
   def show
-    
+
   end
 
   # GET /currencies/new
