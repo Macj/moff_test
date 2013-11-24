@@ -6,11 +6,6 @@
 </p>
 
 <p>
-  <strong>Collected:</strong>
-  <%= @currency.collected ? "In collection" : "Not in collection"%>
-</p>
-
-<p>
   <%= form_tag('/countries/set_visited/', method: :post) do |f|%>
     <%= hidden_field_tag 'currency',  @currency.id %>
     <table>

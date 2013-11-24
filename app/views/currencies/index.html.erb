@@ -2,12 +2,17 @@
   <%= link_to 'Countries', countries_path%>
 </p>
 <h1>Listing currencies</h1>
+<p>
+  <%= link_to 'All', currencies_path()%>
+  / 
+  <%= link_to 'Unfinished', currencies_path(:unfinished => 1)%>
+</p>
 
 <table>
   <thead>
     <tr>
       <th>Name</th>
-      <th>(visited/ not visited)</th>
+      <th>(all/ not visited)</th>
       <th></th>
       <th></th>
     </tr>

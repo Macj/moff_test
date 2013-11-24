@@ -6,9 +6,31 @@
 </p>
 
 <p>
-  <strong>Vesited:</strong>
-  <%= @country.vesited ? "Visited", "Not visited" %>
-</p>
+  <%= form_tag('/currencies/set_collected/', method: :post) do |f|%>
+    <%= hidden_field_tag 'country',  @country.id %>
+    <table>
+      <th>
+        Currency
+      </th>
+      <th>
+        Collected
+      </th>
+      <tbody>
+        <% @country.currencies.each do |currency| %>
+          <tr>
+            <td>
+              <%= label_tag currency.name%>
+            </td>
+            <td>
+              <% collected = CountriesCurrencies.find_by_country_id_and_currency_id( @country.id,  currency.id).collected %>
+              <%= check_box_tag "currencies[#{currency.id}]", collected ? 'on': nil , collected %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <%= submit_tag "Применить"%>
+  <% end %>
 
 <%= link_to 'Edit', edit_country_path(@country) %> |
 <%= link_to 'Back', countries_path %>

@@ -5,6 +5,12 @@ class CountriesController < ApplicationController
   # GET /countries.json
   def index
     @countries = Country.all
+    @collected = {}
+    @not_collected = {}
+    @countries.each do |c|
+      @collected[c.id] = c.currencies.count#CountriesCurrencies.collected_in(c.id)
+      @not_collected[c.id] = CountriesCurrencies.not_collected_in(c.id)
+    end
   end
 
   # GET /countries/1
@@ -64,22 +70,24 @@ class CountriesController < ApplicationController
   def set_visited
     countries = params[:countries]
     currency = Currency.find( params[:currency] )
+    # clear visits
+    visits = CountriesCurrencies.find_all_by_currency_id(currency.id)
+    visits.each do |v|
+      v.visited = false
+      v.save
+    end
 
+    # setup new visited countries
     if countries
       countries.each do |pair|
         if pair[1] == 'on'
           country = currency.countries.find(pair[0])
           visited = CountriesCurrencies.find_by_country_id_and_currency_id(country.id,  currency.id)
           visited.visited = true
+          visited.collected = true
           visited.save
         end
-        currency.update_attribute(:collected, true)
-      end
-    else
-      visits = CountriesCurrencies.find_all_by_currency_id(currency.id)
-      visits.each do |v|
-        v.visited = false
-        v.save
+        #currency.update_attribute(:collected, true)
       end
     end
 

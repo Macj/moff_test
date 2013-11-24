@@ -4,6 +4,7 @@ class CreateCurrenciesCountriesTable < ActiveRecord::Migration
       t.integer :country_id
       t.integer :currency_id
       t.boolean :visited, :default => false
+      t.boolean :collected, :default => false
     end
   end
 end

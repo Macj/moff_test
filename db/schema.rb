@@ -24,6 +24,7 @@ ActiveRecord::Schema.define(version: 20131124091226) do
     t.integer "country_id"
     t.integer "currency_id"
     t.boolean "visited",     default: false
+    t.boolean "collected",   default: false
   end
 
   create_table "currencies", force: true do |t|

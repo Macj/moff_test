@@ -6,9 +6,14 @@ class CurrenciesController < ApplicationController
   def index
     @visited = {}
     @not_visited = {}
-    @currencies = Currency.all
+    @unfinished = params[:unfinished]
+    if @unfinished
+      @currencies = Currency.unfinished
+    else
+      @currencies = Currency.all
+    end
     @currencies.each do |c|
-      @visited[c.id] = CountriesCurrencies.visited_for(c.id)
+      @visited[c.id] =  c.countries.count #CountriesCurrencies.visited_for(c.id)
       @not_visited[c.id] = CountriesCurrencies.not_visited_for(c.id)
     end
   end
@@ -66,6 +71,32 @@ class CurrenciesController < ApplicationController
       format.html { redirect_to currencies_url }
       format.json { head :no_content }
     end
+  end
+
+  def set_collected
+    country = Country.find(params[:country])
+    currencies =  params[:currencies]
+    # clear visits
+    visits = CountriesCurrencies.find_all_by_country_id(country.id)
+    visits.each do |v|
+      v.collected = false
+      v.save
+    end
+    
+    # setup new visited countries
+    if currencies
+      currencies.each do |pair|
+        if pair[1] == 'on'
+          currency = country.currencies.find(pair[0])
+          visited = CountriesCurrencies.find_by_country_id_and_currency_id(country.id,  currency.id)
+          visited.collected = true
+          visited.visited = true
+          visited.save
+        end
+      end
+    end
+
+    redirect_to currencies_path
   end
 
   private
