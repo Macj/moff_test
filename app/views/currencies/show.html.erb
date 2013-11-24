@@ -27,7 +27,8 @@
               <%= label_tag country.name%>
             </td>
             <td>
-              <%= check_box_tag "countries[#{country.id}]", country.visited ? 'on': nil , country.visited %>
+              <% visited = CountriesCurrencies.find_by_country_id_and_currency_id(:country_id => country.id, :currency_id => @currency.id).visited %>
+              <%= check_box_tag "countries[#{country.id}]", visited ? 'on': nil , visited %>
             </td>
           </tr>
         <% end %>

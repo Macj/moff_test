@@ -10,6 +10,7 @@ class CurrenciesController < ApplicationController
   # GET /currencies/1
   # GET /currencies/1.json
   def show
+    
   end
 
   # GET /currencies/new

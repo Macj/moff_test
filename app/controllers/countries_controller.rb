@@ -69,7 +69,9 @@ class CountriesController < ApplicationController
       countries.each do |pair|
         if pair[1] == 'on'
           country = currency.countries.find(pair[0])
-          country.update_attribute(:visited, true)
+          visited = CountriesCurrencies.find_by_country_id_and_currency_id(:country_id => country.id, :currency_id => currency.id)
+          visited.visited = true
+          visited.save
         end
         currency.update_attribute(:collected, true)
       end
