@@ -94,6 +94,18 @@ class CountriesController < ApplicationController
     redirect_to currencies_path
   end
 
+  def visit
+    country = Country.find(params[:id])
+    # setup visits
+    visits = CountriesCurrencies.find_all_by_country_id(country.id)
+    visits.each do |v|
+      v.collected = true
+      v.visited = true
+      v.save
+    end
+    redirect_to countries_path
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_country

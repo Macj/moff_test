@@ -11,6 +11,7 @@ MoffTest::Application.routes.draw do
   root 'currencies#index'
   post 'countries/set_visited' => 'countries#set_visited'
   post 'currencies/set_collected' => 'currencies#set_collected'
+  get 'countries/visit/:id' => 'countries#visit', :as => :visit_country
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

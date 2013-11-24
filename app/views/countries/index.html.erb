@@ -4,7 +4,7 @@
   <thead>
     <tr>
       <th>Name</th>
-      <th>(all/ not visited)</th>
+      <th>(all/ not collected)</th>
       <th></th>
       <th></th>
       <th></th>
@@ -16,6 +16,7 @@
       <tr>
         <td><%= country.name %></td>
         <td><%= "( #{@collected[country.id]} / #{@not_collected[country.id]} )" %></td>
+        <td><%= link_to 'Visit', visit_country_path(country) %></td>
         <td><%= link_to 'Show', country %></td>
         <td><%= link_to 'Edit', edit_country_path(country) %></td>
         <td><%= link_to 'Destroy', country, method: :delete, data: { confirm: 'Are you sure?' } %></td>

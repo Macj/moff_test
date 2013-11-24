@@ -14,7 +14,7 @@ c5 = Country.create(:name => 'Hungary')
 c6 = Country.create(:name => 'France')
 
 cu1 = Currency.create(:name => "USD")
-cu1.countries << [c]
+cu1.countries << [c, c4, c5, c6]
 
 cu1 = Currency.create(:name => "UH")
 cu1.countries << [c1]
