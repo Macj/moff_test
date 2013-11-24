@@ -1,0 +1,41 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @currency.name %>
+</p>
+
+<p>
+  <strong>Collected:</strong>
+  <%= @currency.collected ? "In collection" : "Not in collection"%>
+</p>
+
+<p>
+  <%= form_tag('/countries/set_visited/', method: :post) do |f|%>
+    <%= hidden_field_tag 'currency',  @currency.id %>
+    <table>
+      <th>
+        Country
+      </th>
+      <th>
+        Visited
+      </th>
+      <tbody>
+        <% @currency.countries.each do |country| %>
+          <tr>
+            <td>
+              <%= label_tag country.name%>
+            </td>
+            <td>
+              <%= check_box_tag "countries[#{country.id}]", country.visited ? 'on': nil , country.visited %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <%= submit_tag "Применить"%>
+  <% end %>
+
+</p>
+<%= link_to 'Edit', edit_currency_path(@currency) %> |
+<%= link_to 'Back', currencies_path %>
