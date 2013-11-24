@@ -79,6 +79,11 @@ class CountriesController < ApplicationController
       #todo redo all staff
       #currency.update_attribute(:collected, false)
     end
+    visits = CountriesCurrencies.find_all_by_currency_id(currency.id)
+    visits.each do |v|
+      v.visited = false
+      v.save
+    end
     redirect_to currencies_path
   end
 
